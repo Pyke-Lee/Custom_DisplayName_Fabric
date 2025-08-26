@@ -2,6 +2,7 @@ package io.github.pyke.customdisplayname.item;
 
 import io.github.pyke.customdisplayname.client.ClientNetworking;
 import io.wispforest.owo.ui.base.BaseOwoScreen;
+import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.component.TextBoxComponent;
@@ -12,6 +13,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
@@ -45,11 +47,11 @@ public class ChangeDisplayNameUI extends BaseOwoScreen<FlowLayout> {
         flowLayout.verticalAlignment(VerticalAlignment.CENTER);
 
         var panel = Containers.verticalFlow(Sizing.fixed(240), Sizing.content());
-        panel.surface(Surface.PANEL).padding(Insets.of(12));
+        panel.surface(Surface.DARK_PANEL).padding(Insets.of(12));
 
         var titleRow = Containers.horizontalFlow(Sizing.fill(100), Sizing.content());
         titleRow.horizontalAlignment(HorizontalAlignment.CENTER);
-        titleRow.child(Components.label(Component.literal("닉네임 변경"))
+        titleRow.child(Components.label(Component.literal("닉네임 변경").withStyle(Style.EMPTY.withBold(true).withColor(0xFFE5E7EB)))
             .shadow(true).margins(Insets.bottom(8)));
         panel.child(titleRow);
 
@@ -87,12 +89,14 @@ public class ChangeDisplayNameUI extends BaseOwoScreen<FlowLayout> {
 
         var footerRow = Containers.horizontalFlow(Sizing.fill(100), Sizing.content());
         footerRow.horizontalAlignment(HorizontalAlignment.CENTER);
-        footerRow.child(Components.button(Component.literal("변경하기"), b -> {
+        ButtonComponent btn = (ButtonComponent) Components.button(Component.literal("변경하기").withStyle(Style.EMPTY.withColor(0xFFE5E7EB)), b -> {
             String value = nameField.getValue().trim();
             if (value.isEmpty()) { return; }
 
             ClientNetworking.sendChangeDisplayName(value);
-        }).margins(Insets.top(10)).sizing(Sizing.fill(35), Sizing.content()));
+        }).margins(Insets.top(10)).sizing(Sizing.fill(35), Sizing.content());
+        btn.renderer(ButtonComponent.Renderer.flat(0xFF404040, 0xFF4C4C4C, 0xFF292929));
+        footerRow.child(btn);
         panel.child(footerRow);
 
         flowLayout.child(panel);
