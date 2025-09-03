@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerRenderer.class)
-public abstract class MixinPlayerRenderer {
+public abstract class PlayerRendererMixin {
     @ModifyVariable(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"), argsOnly = true)
     private Component cdn$useTabListName(Component name, AbstractClientPlayer player, Component originalName, PoseStack poseStack, MultiBufferSource buffers, int light) {
         var mc = Minecraft.getInstance();

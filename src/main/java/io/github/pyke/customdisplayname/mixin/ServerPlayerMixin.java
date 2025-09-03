@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayer.class)
-public class MixinServerPlayer {
+public class ServerPlayerMixin {
 	@Inject(method = "getTabListDisplayName", at = @At("HEAD"), cancellable = true)
     private void cdn$overrideTabListName(CallbackInfoReturnable<Component> cir) {
         ServerPlayer self = (ServerPlayer)(Object)this;
